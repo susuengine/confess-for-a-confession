@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>confess a secret to receive a confession</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>confess a secret to receive a confession</h1>
+        <div class="subtitle">most of these confessions were sourced from fidget camp 2025</div>
+        <form id="confess-form">
+            <textarea id="confession" name="confession" rows="4" placeholder="Type your confession here..." required></textarea>
+            <button type="submit">Submit Confession</button>
+        </form>
+    </div>
+    <div id="confession-received-container" class="hidden">
+        <div id="confession-received"></div>
+    </div>
+    <div class="confession-count-outer">
+        <div class="confession-count-display">Total confessions: <span id="confession-count">0</span></div>
+    </div>
+    <script src="/static/main.js"></script>
+</body>
+</html>
