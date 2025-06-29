@@ -56,6 +56,15 @@ def confession_count():
     conn.close()
     return jsonify({'count': count})
 
+def delete_virus_confessions():
+    conn = sqlite3.connect(DB_PATH)
+    c = conn.cursor()
+    c.execute("DELETE FROM confessions WHERE LOWER(text) LIKE ?", ('%virus%',))
+    conn.commit()
+    conn.close()
+
 if __name__ == '__main__':
     init_db()
+    # Uncomment the next line to delete all confessions containing 'virus'
+    # delete_virus_confessions()
     app.run(debug=True)
