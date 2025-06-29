@@ -63,6 +63,20 @@ def delete_virus_confessions():
     conn.commit()
     conn.close()
 
+@app.route('/admin/delete_virus', methods=['POST'])
+def admin_delete_virus():
+    delete_virus_confessions()
+    return jsonify({'status': 'deleted'})
+
+@app.route('/admin/delete_virusexe', methods=['POST'])
+def admin_delete_virusexe():
+    conn = sqlite3.connect(DB_PATH)
+    c = conn.cursor()
+    c.execute("DELETE FROM confessions WHERE LOWER(text) LIKE ?", ('%virus.exe%',))
+    conn.commit()
+    conn.close()
+    return jsonify({'status': 'deleted'})
+
 if __name__ == '__main__':
     init_db()
     # Uncomment the next line to delete all confessions containing 'virus'
