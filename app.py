@@ -63,13 +63,25 @@ def delete_virus_confessions():
     conn.commit()
     conn.close()
 
+ADMIN_SECRET_KEY = os.environ.get('ADMIN_SECRET_KEY', 'changeme123')
+
+def check_admin_key():
+    key = request.headers.get('X-ADMIN-KEY')
+    if key != ADMIN_SECRET_KEY:
+        return False
+    return True
+
 @app.route('/admin/delete_virus', methods=['POST'])
 def admin_delete_virus():
+    if not check_admin_key():
+        return jsonify({'error': 'Forbidden'}), 403
     delete_virus_confessions()
     return jsonify({'status': 'deleted'})
 
 @app.route('/admin/delete_virusexe', methods=['POST'])
 def admin_delete_virusexe():
+    if not check_admin_key():
+        return jsonify({'error': 'Forbidden'}), 403
     conn = sqlite3.connect(DB_PATH)
     c = conn.cursor()
     c.execute("DELETE FROM confessions WHERE LOWER(text) LIKE ?", ('%virus.exe%',))
